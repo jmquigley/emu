@@ -1,0 +1,145 @@
+                         2600 cart chips
+ 
+                     Chips used in 2600 carts 
+
+       Here are pinouts of some chips used in various 2600 carts.
+
+
+               +-------\/-------+
+               |                |
+            A7-+                +-VCC
+               |                |
+            A6-+                +-A8
+               |                |
+            A5-+    4026-0001   +-A9
+               |                |
+            A4-+                +-REX
+               |   AG-035A-11   |
+            A3-+                +-A12
+               |                |
+            A2-+                +-A10
+               |  (c)83 ACTVSN  |
+            A1-+                +-EN_OUT
+               |                |
+            A0-+                +-D7
+               |                |
+            D0-+                +-D6
+               |                |
+            D1-+                +-D5
+               |                |
+            D2-+                +-D4
+               |                |
+           GND-+                +-D3
+               |                |
+               +----------------+
+
+
+  Activision's  'Custom Sound Chip'.   Hooks up to busses as indicated;
+  REX goes through a 560K resistor to +5V.  Placing a finger across this
+  resistor changes the tone of the music!  EN_OUT goes to the enable input
+  of the ROM.  Note that A11 isn't used by this chip. EN is positive-going
+
+
+               +-------\/-------+
+               |                |
+         EN_OUT+                +-GND
+               |                |
+           A12-+                +-A6
+               |                |
+            A7-+   CO20231-11   +-D7
+               |                |
+            A8-+                +-D6 
+               |                |
+            A9-+                +-D5 
+               |                |
+           A10-+                +-D4 
+               |                |
+           A11-+                +-A5    
+               |                |
+            A3-+                +-D3
+               |                |
+            A2-+                +-D2
+               |                |
+            A1-+                +-D1
+               |                |
+            A0-+                +-D0
+               |                |
+           VCC-+                +-A4
+               |                |
+               +----------------+
+
+   This is Atari's 'Super Chip'.  Note the weird pinout.  Also, power and
+   ground are reversed!  EN_OUT goes to the enable input of the ROM.
+   This chip interfaces suspiciously like the one above.  The enable output
+   is positive-going. 
+
+
+               +-------\/-------+
+               |                |
+            A7-+                +-VCC
+               |                |
+            A6-+                +-A8
+               |                |
+            A5-+                +-A9
+               |                |
+            A4-+    Standard    +-VCC (Another Enable or address line?)
+               |                |
+            A3-+                +-A12 (enable)
+               |       ROM      |
+            A2-+                +-A10
+               |                |
+            A1-+                +-A11
+               |                |
+            A0-+                +-D7
+               |                |
+            D0-+                +-D6
+               |                |
+            D1-+                +-D5
+               |                |
+            D2-+                +-D4
+               |                |
+           GND-+                +-D3
+               |                |
+               +----------------+
+
+
+
+   *Everyone* uses this pinout.  Activision and Atari use this pinout
+   for their ROMs.  PB however, uses a slightly diffrent pinout.
+
+                  +-----\/-----+
+                  |            |
+            F6/F8-|            |-VCC
+                  |            |
+     A13 ON EPROM-|            |-VCC
+                  |   GA035    |
+     A12 ON EPROM-|            |-A5
+                  |            |
+               A0-|            |-A1
+                  |            |
+               A2-|            |-A3
+                  |            |
+               A6-|            |-A4
+                  |            |
+               A8-|            |-A9
+                  |            |
+              A11-|            |-/CE ON EPROM
+                  |            |
+               A7-|            |-A12
+                  |            |
+              GND-|            |-A10
+                  |            |
+                  +------------+
+
+    This is Activision's bankswitch chip.  I found it on a Double Dragon
+    cart.  It performs an F6 bankswitch, and I believe it'll do an F8 as 
+    well; pin 1 had a solderable jumper on it; it's open for F6, and shorted
+    to A3 for F8.  This would make sense, because A3 is low for 1FF6 and 
+    1FF7, while it's high for 1FF8 and 1FF9.  More accurately it's a
+    positive enable. :-)  That just leaves the question about what pin
+    19 does.  Also in the cart was a 27C128 EPROM that contained the actual
+    game code.  (16K)
+
+ All text/pics/HTML (c) 1996 Kevin Horton 
+
+

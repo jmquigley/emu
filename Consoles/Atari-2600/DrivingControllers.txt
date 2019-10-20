@@ -1,0 +1,252 @@
+Here's all the information I have on the Driving Controllers.  Sorry it's so
+haphazard, but info on them seems sparse at best.
+
+From dustin@media.utah.edu Tue Nov 29 17:46:45 1994
+Received: from eddy.media.utah.edu (eddy.media.utah.edu [155.99.121.10]) by hairball.ecst.csuchico.edu (8.6.8/8.6.6) with SMTP id RAA21920 for <gchance@ecst.csuchico.edu>; Tue, 29 Nov 1994 17:46:30 -0800
+Received: from dustin.media.utah.edu by eddy.media.utah.edu (4.1/25-Oct-1992)
+	id AA13553; Tue, 29 Nov 94 18:49:08 MST
+Date: Tue, 29 Nov 94 18:49:08 MST
+Message-Id: <9411300149.AA13553@eddy.media.utah.edu>
+X-Sender: dustin@eddy.media.utah.edu
+X-Mailer: Windows Eudora Version 1.4.3
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+To: gchance@ecst.csuchico.edu
+From: dustin@media.utah.edu (Dustin Caldwell)
+Subject: Atari Driving controller
+Status: RO
+
+Hello,
+
+I was reading your 2600 url and noticed that you wanted info for the driving
+controller.
+
+>From my tech ref. manual, it appears that the driving controller worked just
+like the trackball but only one axis. Namely, that it pulsed the joystick
+left or right faster or slower depending on how fast you turned the
+controller. I know for certain that the joystick registers are used for the
+driving controllers.
+
+Need more? - mail me.
+
+-Dustin
+
+dustin@eddy.media.utah.edu
+Computer Engineering
+
+
+From dustin@media.utah.edu Wed Nov 30 07:19:10 1994
+Received: from eddy.media.utah.edu (eddy.media.utah.edu [155.99.121.10]) by hairball.ecst.csuchico.edu (8.6.8/8.6.6) with SMTP id HAA01207 for <gchance@ecst.csuchico.edu>; Wed, 30 Nov 1994 07:19:09 -0800
+Received: from dustin.media.utah.edu by eddy.media.utah.edu (4.1/25-Oct-1992)
+	id AA13920; Wed, 30 Nov 94 08:21:44 MST
+Date: Wed, 30 Nov 94 08:21:43 MST
+Message-Id: <9411301521.AA13920@eddy.media.utah.edu>
+X-Sender: dustin@eddy.media.utah.edu
+X-Mailer: Windows Eudora Version 1.4.3
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+To: "Dr. Demento" <gchance@ecst.csuchico.edu>
+From: dustin@media.utah.edu (Dustin Caldwell)
+Subject: Re: Atari Driving controller
+Status: RO
+
+>I tried plugging one into my mouse port and yeah, I got the pulse effect.
+>When I turn the knob, instead of moving, the pointer moves one pixel, then
+>back, and repeatedly does this.  So it's similar to the Amiga mouse, but
+>not quite the same.
+
+I gave you some slightly wrong info.:-(
+I checked my tech manual last night after mailing you and found out exactly
+how to decode the things: (this is from the atari perspective)
+
+there are 4 stick registers on the atari. the driving controller uses these.
+each register is decoded for the driving controller thus:
+
+upper 4 bits (4-7): don't care
+bits 2,3: high (logical 1)
+bits 0,1: alternating gray code
+
+when turning clockwise, the gray code goes: 11 -> 01 -> 00 -> 10 -> 11 -> etc.
+
+counter-clockwise : 11 -> 10 -> 00 -> 01 -> 11 -> 10 -> etc. (backwards of
+clockwise)
+
+this could be emulated with the joystick by doing l&r -> l -> none -> r -> l&r
+( or something similar :-)
+
+If this didn't make sense, mail questions to me.
+
+-Dustin
+
+
+
+From dustin@media.utah.edu Wed Nov 30 09:12:19 1994
+Received: from eddy.media.utah.edu (eddy.media.utah.edu [155.99.121.10]) by hairball.ecst.csuchico.edu (8.6.8/8.6.6) with SMTP id JAA08549 for <gchance@ecst.csuchico.edu>; Wed, 30 Nov 1994 09:12:18 -0800
+Received: from dustin.media.utah.edu by eddy.media.utah.edu (4.1/25-Oct-1992)
+	id AA14187; Wed, 30 Nov 94 10:14:56 MST
+Date: Wed, 30 Nov 94 10:14:56 MST
+Message-Id: <9411301714.AA14187@eddy.media.utah.edu>
+X-Sender: dustin@eddy.media.utah.edu
+X-Mailer: Windows Eudora Version 1.4.3
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+To: "Dr. Demento" <gchance@ecst.csuchico.edu>
+From: dustin@media.utah.edu (Dustin Caldwell)
+Subject: Re: Atari Driving controller
+Status: RO
+
+>Could this mean that it's impossible or next-to-impossible to use the
+>driving controllers with a system other than the 2600, since these registers
+>don't exist elsewhere?
+
+Sorry for giving that impression. Actually it should be easy. 
+You will decode the driving controller as though it is a joystick that can
+do what no normal joystick can do (namely, move left and right simultaneously).
+
+Plugging in the driving controller causes it to appear to the computer that
+you are moving both up and down on the joystick at all times. In addition to
+this:
+
+When turning clockwise, it will look like you are:
+
+moving both left and right on the joystick, then
+moving left on the joystick, then
+not moving on the joystick, then
+moving right on the joystick, then
+moving both left and right on the joystick, etc. 
+
+When turning counter-clockwise, it will look like you are:
+
+moving both left and right on the joystick, then
+moving right on the joystick, then
+not moving on the joystick, then
+moving left on the joystick, then
+moving both left and right on the joystick, etc. 
+
+You will need to experiment with this, because I am guessing what bits refer
+to what directions on the joystick. -It may really be that left and right
+are always pressed, and that up and down vary with turning the controller.
+If you can't do this with the amiga, let me know and I will check this on my
+atari and let you know for sure how it goes.
+
+-Dustin
+
+
+
+From markh@inmos.co.uk Wed Jan 18 03:32:37 1995
+Received: from oberon.inmos.co.uk (oberon.inmos.co.uk [138.198.35.8]) by hairball.ecst.csuchico.edu (8.6.8/8.6.6) with ESMTP id DAA10909 for <gchance@ecst.csuchico.edu>; Wed, 18 Jan 1995 03:32:31 -0800
+Received: from sulu.inmos.co.uk by oberon.inmos.co.uk; Wed, 18 Jan 1995 11:32:25 GMT
+From: Mark Howard <markh@inmos.co.uk>
+Date: Wed, 18 Jan 95 11:29:18 GMT
+Message-Id: <24261.9501181129@sulu.inmos.co.uk>
+To: gchance@ecst.csuchico.edu, ipoorten@cs.vu.nl
+Subject: Reading Atari steering controllers and trackball.
+Cc: markh@inmos.co.uk
+Status: RO
+
+Hi,
+
+I thought you might be interested in this information, as it doesn't 
+appear in your online manuals.
+
+Steering controllers.
+---------------------
+
+
+These map a rotational gray code onto two of the joystick input
+direction channels.  The other two lines are held high.
+
+
+Button --->   Joystick trigger.
+
+Grey code \   Joystick left and right
+          /
+
+Held high \   Joystick up and down.
+          /
+
+
+                          UDLR
+Rotating left             1100
+                          1101<--|
+                          1111   |
+                          1110   |
+                          1100----
+                          ...
+                          etc
+
+
+                          UDLR
+Rotating right            1100
+                          1110<--|
+                          1111   |
+                          1101   |
+                          1100----
+                          ...
+                          etc
+
+
+Note, that data from the controller can start from any code in the sequence.
+
+
+Trackball in joystick mode.
+--------------------------
+
+Generates U, D, L, R as per a normal joystick.
+Both fire buttons mapped onto the single joystick trigger line.
+
+
+Trackball in trackball mode.
+----------------------------
+
+
+Again, both fire buttons mapped onto the joystick trigger line.
+
+
+Left/Right information mapped onto joystick L & R lines.
+Up/Down information mapped onto joystick U & D lines.
+
+                        LR
+Ball moving left        00
+                        10<-|
+                        00---
+
+
+                        LR
+Ball moving right       01
+                        11<-|
+                        01---
+
+
+                        UD
+Ball moving up          00
+                        10<-|
+                        00---
+
+
+                        UD
+Ball moving down        01
+                        11<-|
+                        01---
+
+
+Note that the sequence can start with either L/U at 0 or 1, but the direction
+indication bit R/D changes as soon as the trackball detects a direction change.
+
+The faster bit L/U toggles, the faster the ball is rolling.  It is a good idea
+to check about 8 times during screen display (DLI on 8 bit Atari computers,
+part of display loop on VCS), and during vertical blank.  Checking only during
+vblank will only allow the controlled item to move at scan rate/2, i.e. one
+pixel every two frames, and transitions will be missed, causing the item to
+SLOW DOWN when the ball is rotated faster!
+
+If either of you have any questions about this, please ask.  The reason for
+doing this now, is because I am in the process of selling all my 8 bit stuff,
+having already sold all my VCS collection. :-(
+
+
+Mark.
+
+
+Mark.
+
